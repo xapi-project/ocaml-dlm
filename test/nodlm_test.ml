@@ -24,7 +24,8 @@ let has_failed_nodlm f =
   Lwt.try_bind f (fun () -> Lwt.return_false)
     (function
       | Unix.Unix_error((Unix.ENOENT|Unix.ENOSYS),
-                        ("dlm_open_lockspace"|"dlm_create_lockspace"), lockspace) ->
+                        ("dlm_open_lockspace"|"dlm_create_lockspace"), ls) ->
+        assert_equal ls lockspace;
         Lwt.return_true
       | e -> Lwt.fail e)
 
@@ -39,7 +40,7 @@ let test_withlockspace _ =
 
 let test_leavelockspace force _ =
   test_nolockspace (fun () ->
-      Dlm.leave lockspace)
+      Dlm.leave ~force lockspace)
 
 let test_createlockspace _ =
   (* we don't run as root, so this must fail *)

@@ -16,7 +16,7 @@ clean:
 	jbuilder clean
 
 test:
-	jbuilder runtest
+	jbuilder runtest --dev
 
 # requires odoc
 doc:
