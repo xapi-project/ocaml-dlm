@@ -1,0 +1,20 @@
+opam-version: "1.2"
+version: "1.0"
+maintainer: "xen-api@list.xensource.com"
+authors: ["Edwin Török"]
+homepage: "https://github.com/xapi-project/ocaml-libdlm/"
+bug-reports: "https://github.com/xapi-project/ocaml-libdlm/issues"
+dev-repo: "https://github.com/xapi-project/ocaml-libdlm.git"
+license: "LGPL-2.1 with OCaml linking exception"
+build: [
+  ["jbuilder" "build" "--only" "dlm" "--root" "." "-j" jobs "@install"]
+]
+
+depends: [
+  "jbuilder" {build}
+  "ctypes" { >= "0.11.1" }
+  "lwt"
+  "unix-errno"
+  "oUnit" {test}
+  "uuidm" {test}
+]
