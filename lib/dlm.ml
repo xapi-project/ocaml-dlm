@@ -97,7 +97,7 @@ let mode_to_const = function
   | LKM_PWMODE -> Mode.lkm_pwmode
   | LKM_EXMODE -> Mode.lkm_exmode
 
-let with_lock ls ?(mode=LKM_EXMODE) ?timeout name ~f =
+let with_lock ls ?(mode=LKM_EXMODE) ?(try_=false) ?timeout name ~f =
   let open Dlm_lksb in
   let t = make t in
   setf t sb_status (-1);
@@ -130,10 +130,11 @@ let with_lock ls ?(mode=LKM_EXMODE) ?timeout name ~f =
       Lwt.return_unit
   in
   do_lock LKM_NLMODE Flags.(lkf_expedite ||| lkf_wait) None >>= fun () ->
-  let flags = Flags.lkf_wait in
-  let flags = if timeout = None then flags else Flags.(flags ||| lkf_timeout) in
-  do_lock mode flags timeout >>= fun lock ->
-  Lwt.finalize f
+  Lwt.finalize (fun () ->
+      let flags = Flags.(lkf_wait ||| lkf_convert) in
+      let flags = if try_ then Flags.lkf_noqueue ||| flags else flags in
+      let flags = if timeout = None then flags else Flags.(flags ||| lkf_timeout) in
+      do_lock mode flags timeout >>= f)
     (fun () ->
        let lkid  = (getf t sb_lkid) in
        let t= addr t in

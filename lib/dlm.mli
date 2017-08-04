@@ -40,12 +40,14 @@ type mode =
   | LKM_PWMODE (** protected write *)
   | LKM_EXMODE (** exclusive *)
 
-(** [with_lock lshandle ?mode ?timeout lockname ~f]
+(** [with_lock lshandle ?mode ?try_ ?timeout lockname ~f]
     acquires [lockname] in lock[mode] and calls ~f when the lock is acquired,
     and releases the lock after [f] terminates.
     [timeout] specifies how long to wait for the lock to be acquired.
+    [try_] will fail with EAGAIN if the lock cannot be granted immediately.
 *)
 val with_lock :
   t ->
   ?mode:mode ->
+  ?try_:bool ->
   ?timeout:float -> string -> f:(unit -> 'a Lwt.t) -> 'a Lwt.t
