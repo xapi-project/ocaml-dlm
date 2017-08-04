@@ -2,12 +2,11 @@
  ((names (dlm_test nodlm_test))
   (libraries (dlm oUnit uuidm))))
 
-
 (install
  ((section bin)
   (files ((dlm_test.exe as dlm-test)))))
 
 (alias
-   ((name runtest)
-    (deps (nodlm_test.exe))
-    (action (run ${<} -runner sequential))))
+ ((name runtest)
+  (deps (nodlm_test.exe))
+  (action (run ${<} -runner sequential))))
