@@ -56,21 +56,25 @@ let close ls =
 let default_mode =
   PosixTypes.Mode.of_int 0o600
 
+let create_destroy = Lwt_mutex.create ()
+
 let join ?(mode=default_mode) name =
   Lwt.catch (fun () ->
       open_ name)
     (function
       | Unix.Unix_error _ ->
-        check_opt ~call:"dlm_create_lockspace" ~label:name @@
-        dlm_create_lockspace name mode
+        Lwt_mutex.with_lock create_destroy (fun () ->
+            check_opt ~call:"dlm_create_lockspace" ~label:name @@
+            dlm_create_lockspace name mode)
       | e -> Lwt.fail e
     ) >>= close
 
 let leave ?(force=false) name =
   let force_int = if force then 1 else 0 in
   open_ name >>= fun ls ->
-  check_int ~call:"dlm_release_lockspace" ~label:name @@
-  dlm_release_lockspace name ls force_int
+  Lwt_mutex.with_lock create_destroy (fun () ->
+      check_int ~call:"dlm_release_lockspace" ~label:name @@
+      dlm_release_lockspace name ls force_int)
 
 let with_lockspace name ~f =
   open_ name >>= fun ls ->
