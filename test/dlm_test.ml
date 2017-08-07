@@ -47,6 +47,7 @@ let with_join_lockspace ctx name ~f =
 
 
 let test_joinleave n f ctx =
+  OUnit2.skip_if (n > 10) "Only test small number of lockspaces";
   Random.self_init ();
   Lwt_main.run @@ begin
     let uuids = uuid_gen n in
@@ -106,6 +107,6 @@ let suite =
         "join/leave new lockspace and open/close" >:: test_joinleave n test_openclose;
         "acquire/release locks" >:: test_joinleave 1 (test_acquire_release n nop);
         "lock timeouts" >:: test_joinleave 1 (test_acquire_release n test_lock_timeout)
-      ]) [1; 10; 100]
+      ]) [1; 10; 100; 1000]
 
 let () = run_test_tt_main suite
