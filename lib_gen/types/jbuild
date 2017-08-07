@@ -18,6 +18,7 @@
 ; bindings_structs -> stubgen
 (library
     ((name bindings_structs_lib)
+     (public_name dlm.bindings-structs)
      (modules (bindings_structs))
      (libraries (ctypes ctypes.stubs))))
 

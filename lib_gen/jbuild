@@ -7,6 +7,7 @@
 
 (library
     ((name dlm_bindings)
+     (public_name dlm.bindings)
      (modules (generated_types bindings))
      (flags (:standard -w -9-27))
      (libraries (bindings_structs_lib ctypes ctypes.stubs))))
