@@ -23,7 +23,7 @@ let lockspace = "unit-test-nonexistent-lockspace"
 let has_failed_nodlm f =
   Lwt.try_bind f (fun () -> Lwt.return_false)
     (function
-      | Unix.Unix_error((Unix.ENOENT|Unix.ENOSYS),
+      | Unix.Unix_error((Unix.ENOENT|Unix.ENOSYS|Unix.EPERM),
                         ("dlm_open_lockspace"|"dlm_create_lockspace"), ls) ->
         assert_equal ls lockspace;
         Lwt.return_true
