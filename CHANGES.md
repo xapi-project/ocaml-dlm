@@ -1,3 +1,8 @@
+v0.3.1 2018-12-07
+-----------------
+
+Moved from jbuilder to dune.
+
 v0.3.0 2017-09-05
 -----------------
 
@@ -7,7 +12,6 @@ v0.2.0 2017-08-07
 ----------------
 
 Fix dependencies, generate documentation and examples.
-
 
 v0.1.0 2017-08-04
 ----------------
