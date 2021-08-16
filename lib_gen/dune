@@ -8,7 +8,8 @@
     bindings_structs_lib
     ctypes.stubs
     ctypes
-    dlm_bindings)
+    dlm_bindings
+    unix)
 )
 
 (rule (with-stdout-to "generated_types.ml" (run "types/types_stubgen.exe")))
