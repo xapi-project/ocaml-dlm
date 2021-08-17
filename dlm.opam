@@ -1,24 +1,25 @@
 opam-version: "2.0"
-version: "0.3.1"
 maintainer: "xen-api@list.xensource.com"
 authors: ["Edwin Török"]
 homepage: "https://github.com/xapi-project/ocaml-dlm/"
 bug-reports: "https://github.com/xapi-project/ocaml-dlm/issues"
 dev-repo: "git+https://github.com/xapi-project/ocaml-dlm.git"
 doc: "https://xapi-project.github.io/ocaml-dlm/doc"
-license: "LGPL-2.1 with OCaml linking exception"
+license: "LGPL-2.1-only WITH OCaml-LGPL-linking-exception"
 build: [
   ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "build" "-p" name "-j" jobs "@runtest"] {with-test}
+  ["dune" "build" "-p" name "-j" jobs "@doc"] {with-doc}
 ]
-run-test: ["dune" "runtest" "-p" name "-j" jobs]
 depends: [
   "ocaml"
-  "dune" {build & >= "1.4"}
+  "dune" {>= "1.4"}
   "ctypes" {>= "0.11.1"}
   "lwt"
+  "odoc" {with-doc}
+  "ounit" {with-test}
   "unix-errno"
-  "ounit"
-  "uuidm"
+  "uuidm" {>= "0.9.6"}
 ]
 depexts: [
   ["libdlm-dev"] {os-distribution = "debian"}

@@ -1,3 +1,9 @@
+v0.3.2 2021-08-17
+-----------------
+Add missing unix dependency to dune metadata
+Update opam metadata to best practices
+Revamp ci to use github, including doc upload
+
 v0.3.1 2018-12-07
 -----------------
 

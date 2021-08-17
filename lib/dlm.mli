@@ -68,7 +68,7 @@ val with_lockspace :
    Only a simplified interface is provided that acquires a lock, performs an operation and releases it.
    Locking can be nested, even with same lock name, but note that trying to acquire an exclusive lock twice will fail.
 
-   It is recommended to use the {!const:LKM_PRMODE} mode for reading and {!const:LKM_EXMODE} for writing.
+   It is recommended to use the {!constructor:LKM_PRMODE} mode for reading and {!constructor:LKM_EXMODE} for writing.
 *)
 
 (** lock mode *)
@@ -84,7 +84,7 @@ type mode =
     acquires [lockname] in lock[mode] and calls [f] when the lock is acquired.
     Releases the lock after [f] terminates.
 
-    @param mode lock mode defaults to {!const:LKM_EXMODE}
+    @param mode lock mode defaults to {!constructor:LKM_EXMODE}
     @param timeout specifies how long to wait for the lock to be acquired
     @param try_ fail with EAGAIN if the lock cannot be granted immediately
     @raise Unix.Unix_error if the lock cannot be granted
