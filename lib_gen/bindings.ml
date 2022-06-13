@@ -18,7 +18,6 @@ module Make(F: Cstubs.FOREIGN) = struct
   open F
   open PosixTypes
 
-  external unix_error_of_errno : int -> Unix.error = "unix_error_of_code"
   type dlm_lshandle_t = unit ptr
   let dlm_lshandle_t : dlm_lshandle_t typ = ptr void
   let dlm_lshandle_t_opt : dlm_lshandle_t option typ = ptr_opt void
