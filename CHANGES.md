@@ -1,3 +1,7 @@
+v0.3.3 2022-06-13
+-----------------
+Remove unused "primitive" 
+
 v0.3.2 2021-08-17
 -----------------
 Add missing unix dependency to dune metadata
